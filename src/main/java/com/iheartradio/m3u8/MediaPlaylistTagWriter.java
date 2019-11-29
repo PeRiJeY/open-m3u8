@@ -219,10 +219,20 @@ abstract class MediaPlaylistTagWriter extends ExtTagWriter {
         } else {
             builder.append(Float.toString(trackData.getTrackInfo().duration));
         }
-
-	 builder.append(Constants.COMMA);
+        
+        if (trackData.getTrackInfo().attributes != null) {
+        	trackData.getTrackInfo().attributes.forEach((key, value) -> {
+        		builder.append(" ").append(key).append("=\"").append(value).append("\"");        			
+        	});
+        }
+        
         if (trackData.getTrackInfo().title != null) {
+        	if (trackData.getTrackInfo().title.indexOf(Constants.COMMA) < 0) {
+        		builder.append(Constants.COMMA);
+        	}
             builder.append(trackData.getTrackInfo().title);
+        } else {
+        	builder.append(Constants.COMMA);
         }
 
         tagWriter.writeTag(Constants.EXTINF_TAG, builder.toString());

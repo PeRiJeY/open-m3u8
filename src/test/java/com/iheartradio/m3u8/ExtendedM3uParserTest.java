@@ -98,8 +98,8 @@ public class ExtendedM3uParserTest {
                         "\n";
 
         final List<TrackData> expectedTracks = Arrays.asList(
-                new TrackData.Builder().withUri(absolute).withTrackInfo(new TrackInfo(120, "title 1")).build(),
-                new TrackData.Builder().withUri(relative).withTrackInfo(new TrackInfo(100, "title 2")).withProgramDateTime("2010-02-19T14:54:23.031+08:00").build());
+                new TrackData.Builder().withUri(absolute).withTrackInfo(new TrackInfo(120, "title 1", null)).build(),
+                new TrackData.Builder().withUri(relative).withTrackInfo(new TrackInfo(100, "title 2", null)).withProgramDateTime("2010-02-19T14:54:23.031+08:00").build());
 
         final InputStream inputStream = new ByteArrayInputStream(validData.getBytes("utf-8"));
         final Playlist playlist = new ExtendedM3uParser(inputStream, Encoding.UTF_8, ParsingMode.STRICT).parse();
@@ -176,7 +176,7 @@ public class ExtendedM3uParserTest {
 
     private static TrackData makeTrackData(String uri, float duration) {
         return new TrackData.Builder()
-                .withTrackInfo(new TrackInfo(duration, null))
+                .withTrackInfo(new TrackInfo(duration, null, null))
                 .withUri(uri)
                 .build();
     }

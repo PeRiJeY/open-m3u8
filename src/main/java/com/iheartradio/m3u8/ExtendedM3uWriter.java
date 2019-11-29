@@ -14,7 +14,7 @@ class ExtendedM3uWriter extends Writer {
     public ExtendedM3uWriter(OutputStream outputStream, Encoding encoding) {
         super(outputStream, encoding);
         // Order influences output in file!
-        putWriters(
+        /*putWriters(
                 ExtTagWriter.EXTM3U_HANDLER,
                 ExtTagWriter.EXT_X_VERSION_HANDLER,
                 MediaPlaylistTagWriter.EXT_X_PLAYLIST_TYPE,
@@ -26,6 +26,12 @@ class ExtendedM3uWriter extends Writer {
                 MediaPlaylistTagWriter.EXT_X_ALLOW_CACHE,
                 MasterPlaylistTagWriter.EXT_X_STREAM_INF,
                 MasterPlaylistTagWriter.EXT_X_I_FRAME_STREAM_INF,
+                MediaPlaylistTagWriter.MEDIA_SEGMENTS,
+                MediaPlaylistTagWriter.EXT_X_ENDLIST
+        );*/
+        
+        putWriters(
+                ExtTagWriter.EXTM3U_HANDLER,
                 MediaPlaylistTagWriter.MEDIA_SEGMENTS,
                 MediaPlaylistTagWriter.EXT_X_ENDLIST
         );

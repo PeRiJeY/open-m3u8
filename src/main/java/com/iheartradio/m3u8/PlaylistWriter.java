@@ -64,7 +64,7 @@ public class PlaylistWriter {
      *                           that is, if PlaylistValidation.from(playlist).isValid() == false
      */
     public void write(Playlist playlist) throws IOException, ParseException, PlaylistException {
-        final PlaylistValidation validation = PlaylistValidation.from(playlist);
+        final PlaylistValidation validation = PlaylistValidation.from(playlist, ParsingMode.LENIENT);
 
         if (!validation.isValid()) {
             throw new PlaylistException("", validation.getErrors());

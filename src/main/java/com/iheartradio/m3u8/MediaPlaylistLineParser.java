@@ -1,13 +1,18 @@
 package com.iheartradio.m3u8;
 
-import com.iheartradio.m3u8.data.*;
-import com.iheartradio.m3u8.data.EncryptionData.Builder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+
+import com.iheartradio.m3u8.data.EncryptionData;
+import com.iheartradio.m3u8.data.EncryptionData.Builder;
+import com.iheartradio.m3u8.data.EncryptionMethod;
+import com.iheartradio.m3u8.data.MapInfo;
+import com.iheartradio.m3u8.data.PlaylistType;
+import com.iheartradio.m3u8.data.StartData;
+import com.iheartradio.m3u8.data.TrackInfo;
 
 class MediaPlaylistLineParser implements LineParser {
     private final IExtTagParser tagParser;
@@ -276,8 +281,22 @@ class MediaPlaylistLineParser implements LineParser {
             lineParser.parse(line, state);
 
             final Matcher matcher = ParseUtil.match(Constants.EXTINF_PATTERN, line, getTag());
+            
+            Map<String, String> attributes = parteAttributes(matcher.group(2));
 
-            state.getMedia().trackInfo = new TrackInfo(ParseUtil.parseFloat(matcher.group(1), getTag()), matcher.group(2));
+            state.getMedia().trackInfo = new TrackInfo(ParseUtil.parseFloat(matcher.group(1), getTag()), matcher.group(3), attributes);
+        }
+        
+        private Map<String, String> parteAttributes(String lineAttributes) throws ParseException {
+        	Map<String, String> result = new HashMap<>();
+        	
+        	final Matcher matcher = Constants.EXTINF_ATTRIBUTES_PATTERN.matcher(lineAttributes);
+        	
+        	while (matcher.find()) {
+        		result.put(matcher.group(1), matcher.group(2));
+    		}
+        	
+        	return result;
         }
     };
 
